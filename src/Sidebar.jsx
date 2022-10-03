@@ -8,9 +8,11 @@ import { SearchOutlined } from "@mui/icons-material";
 import SidebarChat from "./SidebarChat";
 import { useState } from "react";
 import db from "./firebase";
+import { useStateValue } from "./StateProvider";
 
 function Sidebar() {
   const [rooms, setRooms] = useState([]);
+  const [{user}, dispatch] = useStateValue();
   useEffect(() => {
     const deactive = db.collection("rooms").onSnapshot((snapshot) => {
       setRooms(
@@ -28,7 +30,7 @@ function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebar_header">
-        <Avatar />
+        <Avatar src={user?.photoURL}/>
         <div className="sidebar_headerRight">
           <IconButton>
             <DonutLargeIcon />
